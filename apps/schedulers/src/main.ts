@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { SchedulersModule } from './schedulers.module';
-import { setupSwagger } from '@marvel/common';
+import { setupSwagger } from '@shield/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(SchedulersModule);

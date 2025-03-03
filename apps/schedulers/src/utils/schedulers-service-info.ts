@@ -1,4 +1,4 @@
-import { ServiceInfo } from '@marvel/common';
+import { ServiceInfo } from '@shield/common';
 
 export const schedulersServiceInfo: ServiceInfo = {
   service: 'Schedulers',

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TimersController } from './timers.controller';
 import { TimersService } from './timers.service';
-import { ServiceInfoModule } from '@marvel/common';
+import { ServiceInfoModule } from '@shield/common';
 import { timersServiceInfo } from './utils';
 
 @Module({

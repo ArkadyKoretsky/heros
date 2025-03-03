@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { SchedulersService } from './schedulers.service';
-import { ServiceInfo, ServiceInfoService } from '@marvel/common';
+import { ServiceInfo, ServiceInfoService } from '@shield/common';
 import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 
 @Controller()

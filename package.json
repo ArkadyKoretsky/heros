@@ -79,7 +79,7 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^@marvel/common(|/.*)$": "<rootDir>/libs/common/src/$1"
+      "^@shield/common(|/.*)$": "<rootDir>/libs/common/src/$1"
     }
   }
 }

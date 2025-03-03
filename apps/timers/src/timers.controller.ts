@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { TimersService } from './timers.service';
-import { ServiceInfo, ServiceInfoService } from '@marvel/common';
+import { ServiceInfo, ServiceInfoService } from '@shield/common';
 import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 
 @Controller()

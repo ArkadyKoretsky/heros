@@ -18,12 +18,8 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@marvel/common": [
-        "libs/common/src"
-      ],
-      "@marvel/common/*": [
-        "libs/common/src/*"
-      ]
+      "@shield/common": ["libs/common/src"],
+      "@shield/common/*": ["libs/common/src/*"]
     }
   }
 }

@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { SchedulersController } from './schedulers.controller';
 import { SchedulersService } from './schedulers.service';
 import { schedulersServiceInfo } from './utils';
-import { ServiceInfoModule } from '@marvel/common';
+import { ServiceInfoModule } from '@shield/common';
 
 describe(SchedulersController.name, () => {
   let schedulersController: SchedulersController;
