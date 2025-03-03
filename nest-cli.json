@@ -1,15 +1,17 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/superheros/src",
+  "sourceRoot": "apps/superheroes/src",
   "compilerOptions": {
     "deleteOutDir": true,
-    "plugins": ["@nestjs/swagger"],
+    "plugins": [
+      { "name": "@nestjs/swagger", "options": { "introspectComments": true } }
+    ],
     "webpack": true,
-    "tsConfigPath": "apps/superheros/tsconfig.app.json"
+    "tsConfigPath": "apps/superheroes/tsconfig.app.json"
   },
   "monorepo": true,
-  "root": "apps/superheros",
+  "root": "apps/superheroes",
   "projects": {
     "common": {
       "type": "library",
@@ -41,16 +43,16 @@
         "tsConfigPath": "apps/schedulers/tsconfig.app.json"
       }
     },
-    "superheros": {
+    "superheroes": {
       "type": "application",
-      "root": "apps/superheros",
+      "root": "apps/superheroes",
       "entryFile": "main",
-      "sourceRoot": "apps/superheros/src",
+      "sourceRoot": "apps/superheroes/src",
       "compilerOptions": {
         "assets": [
-          { "include": "../config/*.yaml", "outDir": "./dist/apps/superheros" }
+          { "include": "../config/*.yaml", "outDir": "./dist/apps/superheroes" }
         ],
-        "tsConfigPath": "apps/superheros/tsconfig.app.json"
+        "tsConfigPath": "apps/superheroes/tsconfig.app.json"
       }
     },
     "timers": {

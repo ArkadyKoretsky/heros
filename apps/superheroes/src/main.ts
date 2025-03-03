@@ -1,17 +1,18 @@
 import { NestFactory } from '@nestjs/core';
-import { SuperherosModule } from './superheros.module';
+import { superheroesModule } from './superheroes.module';
 import { setupSwagger } from '@shield/common';
 import { ConfigService } from '@nestjs/config';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(SuperherosModule);
+  const app = await NestFactory.create(superheroesModule);
   setupSwagger(app);
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   const configService = app.get(ConfigService);
   const logger = new Logger('bootstrap');
   const port: number = configService.get('http.port') ?? 3000;
   await app.listen(port, () =>
-    logger.log(`Superheros server is running on port ${port}`),
+    logger.log(`superheroes server is running on port ${port}`),
   );
 }
 bootstrap();
