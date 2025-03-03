@@ -38,7 +38,7 @@ describe(SuperheroesController.name, () => {
 
   describe('root', () => {
     it('should return superheroes service info', () => {
-      expect(superheroesController.getsuperheroesServiceInfo()).toBe(
+      expect(superheroesController.getSuperheroesServiceInfo()).toBe(
         superheroesServiceInfo,
       );
     });

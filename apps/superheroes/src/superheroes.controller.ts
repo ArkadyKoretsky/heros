@@ -23,7 +23,7 @@ export class SuperheroesController {
     type: ServiceInfo,
   })
   @Get()
-  getsuperheroesServiceInfo(): ServiceInfo {
+  getSuperheroesServiceInfo(): ServiceInfo {
     return this.serviceInfoService.getServiceInfo();
   }
 
