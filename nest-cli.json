@@ -20,12 +20,24 @@
         "tsConfigPath": "libs/common/tsconfig.lib.json"
       }
     },
+    "config": {
+      "type": "library",
+      "root": "libs/config",
+      "entryFile": "index",
+      "sourceRoot": "libs/config/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/config/tsconfig.lib.json"
+      }
+    },
     "schedulers": {
       "type": "application",
       "root": "apps/schedulers",
       "entryFile": "main",
       "sourceRoot": "apps/schedulers/src",
       "compilerOptions": {
+        "assets": [
+          { "include": "../config/*.yaml", "outDir": "./dist/apps/schedulers" }
+        ],
         "tsConfigPath": "apps/schedulers/tsconfig.app.json"
       }
     },
@@ -35,6 +47,9 @@
       "entryFile": "main",
       "sourceRoot": "apps/superheros/src",
       "compilerOptions": {
+        "assets": [
+          { "include": "../config/*.yaml", "outDir": "./dist/apps/superheros" }
+        ],
         "tsConfigPath": "apps/superheros/tsconfig.app.json"
       }
     },
@@ -44,6 +59,9 @@
       "entryFile": "main",
       "sourceRoot": "apps/timers/src",
       "compilerOptions": {
+        "assets": [
+          { "include": "../config/*.yaml", "outDir": "./dist/apps/timers" }
+        ],
         "tsConfigPath": "apps/timers/tsconfig.app.json"
       }
     }
