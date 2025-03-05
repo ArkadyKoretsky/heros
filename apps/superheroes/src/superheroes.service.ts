@@ -39,10 +39,9 @@ export class SuperheroesService {
       return superhero;
     } catch (error) {
       if (error instanceof NotFoundException) throw error;
-      this.logger.error(`Error getting superhero with id ${id}`, error);
-      throw new InternalServerErrorException(
-        `Error getting superhero with id ${id}`,
-      );
+      const message = `Error getting superhero with id ${id}`;
+      this.logger.error(message, error);
+      throw new InternalServerErrorException(message);
     }
   }
 }

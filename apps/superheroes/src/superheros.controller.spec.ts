@@ -16,7 +16,7 @@ describe(SuperheroesController.name, () => {
   let superheroesController: SuperheroesController;
 
   beforeEach(async () => {
-    const superheroesMock = {
+    const superheroesServiceMock = {
       create: (superhero: Superhero) => {
         superheroes.push({ ...superhero, _id: '1234' });
         return superhero;
@@ -28,7 +28,9 @@ describe(SuperheroesController.name, () => {
     const app: TestingModule = await Test.createTestingModule({
       imports: [ServiceInfoModule.register(superheroesServiceInfo)],
       controllers: [SuperheroesController],
-      providers: [{ provide: SuperheroesService, useValue: superheroesMock }],
+      providers: [
+        { provide: SuperheroesService, useValue: superheroesServiceMock },
+      ],
     }).compile();
 
     superheroesController = app.get<SuperheroesController>(

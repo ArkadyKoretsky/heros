@@ -44,7 +44,7 @@ export class Superhero {
   powers: string[];
 }
 
-export const superheroeschema = SchemaFactory.createForClass(Superhero);
+export const superheroesSchema = SchemaFactory.createForClass(Superhero);
 
 export const projection = Object.fromEntries(
   Object.keys(new Superhero()).map((key) => [key, 1]),
