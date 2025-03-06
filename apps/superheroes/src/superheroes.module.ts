@@ -6,7 +6,7 @@ import { superheroesServiceInfo } from './utils';
 import { YamlConfigModule } from '@shield/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Superhero, superheroesSchema } from './entities';
+import { Superhero, SuperheroSchema } from './entities';
 import { HealthModule } from './health/health.module';
 
 @Module({
@@ -19,7 +19,7 @@ import { HealthModule } from './health/health.module';
       inject: [ConfigService],
     }),
     MongooseModule.forFeature([
-      { name: Superhero.name, schema: superheroesSchema },
+      { name: Superhero.name, schema: SuperheroSchema },
     ]),
     ServiceInfoModule.register(superheroesServiceInfo),
     YamlConfigModule,
