@@ -11,7 +11,11 @@ import { CreateTimer, ResponseTimer, Timer } from './entities';
 import { Model } from 'mongoose';
 import { catchError, firstValueFrom, map, retry } from 'rxjs';
 import { AxiosError } from 'axios';
-import { convertTimestampsToDate, getTotalSecondsTillExecution } from './utils';
+import {
+  convertTimestampsToDate,
+  getTotalSecondsTillExecution,
+  SuperheroData,
+} from './utils';
 
 @Injectable()
 export class TimersService {
@@ -36,10 +40,9 @@ export class TimersService {
     try {
       const superhero = await firstValueFrom(
         this.httpService
-          .get<{
-            _id: string;
-            fullName: string;
-          }>(`${this.superheroesEndpoint}/${createTimer.superheroId}`)
+          .get<SuperheroData>(
+            `${this.superheroesEndpoint}/${createTimer.superheroId}`,
+          )
           .pipe(
             retry(this.retryAttempts),
             map((response) => response.data),
