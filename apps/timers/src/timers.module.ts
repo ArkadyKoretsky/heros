@@ -8,6 +8,7 @@ import { HttpModule } from '@nestjs/axios';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Timer, TimerSchema } from './entities';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { Timer, TimerSchema } from './entities';
       }),
       inject: [ConfigService],
     }),
+    HealthModule,
   ],
   controllers: [TimersController],
   providers: [TimersService],
