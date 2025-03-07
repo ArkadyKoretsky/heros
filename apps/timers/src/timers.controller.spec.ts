@@ -78,22 +78,22 @@ describe(TimersController.name, () => {
 
   describe('create timer', () => {
     it('should create new timer and return its id and total seconds till execution', async () => {
-      const result = await timersController.createTimer({
-        ...createTimer,
-        superheroId: '888',
-      });
-      expect(result).toEqual(new NotFoundException('No such superhero'));
-    });
-  });
-
-  describe('non existing hero', () => {
-    it('throw not found exception', async () => {
       const result = await timersController.createTimer(createTimer);
       expect(result).toEqual({
         _id: '5678',
         totalSecondsTillExecution: 180, // 3 minutes
       });
       expect(timers).toHaveLength(1);
+    });
+  });
+
+  describe('non existing hero', () => {
+    it('throw not found exception', async () => {
+      const result = await timersController.createTimer({
+        ...createTimer,
+        superheroId: '888',
+      });
+      expect(result).toEqual(new NotFoundException('No such superhero'));
     });
   });
 
