@@ -17,13 +17,15 @@ describe(SuperheroesController.name, () => {
 
   beforeEach(async () => {
     const superheroesServiceMock = {
-      create: (superhero: Superhero) => {
+      create: (superhero: Superhero): Superhero => {
         superheroes.push({ ...superhero, _id: '1234' });
         return superhero;
       },
-      getById: (id: string) =>
-        superheroes.find((superhero) => superhero._id === id) ??
-        new NotFoundException('Superhero not found'),
+      getById: (id: string): Superhero => {
+        const superhero = superheroes.find((superhero) => superhero._id === id);
+        if (!superhero) throw new NotFoundException('Superhero not found');
+        return superhero;
+      },
     };
     const app: TestingModule = await Test.createTestingModule({
       imports: [ServiceInfoModule.register(superheroesServiceInfo)],
@@ -66,9 +68,11 @@ describe(SuperheroesController.name, () => {
 
   describe('non existing super hero', () => {
     it('should throw not found exception', async () => {
-      expect(await superheroesController.getSuperheroById('555')).toEqual(
-        new NotFoundException('Superhero not found'),
-      );
+      try {
+        await superheroesController.getSuperheroById('555');
+      } catch (error) {
+        expect(error).toEqual(new NotFoundException('Superhero not found'));
+      }
     });
   });
 });

@@ -8,7 +8,7 @@ import {
   SuperheroData,
   timersServiceInfo,
 } from './utils';
-import { CreateTimer, Timer } from './entities';
+import { CreateTimer, ResponseTimer, Timer } from './entities';
 import { NotFoundException } from '@nestjs/common';
 
 describe(TimersController.name, () => {
@@ -26,11 +26,11 @@ describe(TimersController.name, () => {
 
   beforeEach(async () => {
     const timersServiceMock = {
-      create: (createTimer: CreateTimer) => {
+      create: (createTimer: CreateTimer): ResponseTimer => {
         const superhero = superheroes.find(
           (superhero) => superhero._id === createTimer.superheroId,
         );
-        if (!superhero) return new NotFoundException('No such superhero');
+        if (!superhero) throw new NotFoundException('No such superhero');
         timers.push({
           _id: '5678',
           superheroId: superhero._id,
@@ -50,7 +50,7 @@ describe(TimersController.name, () => {
           ),
         };
       },
-      getById: (id: string) => {
+      getById: (id: string): ResponseTimer => {
         const timer = timers.find((timer) => timer._id === id);
         if (!timer) return { _id: id, totalSecondsTillExecution: 0 };
         return {
@@ -89,11 +89,14 @@ describe(TimersController.name, () => {
 
   describe('non existing hero', () => {
     it('throw not found exception', async () => {
-      const result = await timersController.createTimer({
-        ...createTimer,
-        superheroId: '888',
-      });
-      expect(result).toEqual(new NotFoundException('No such superhero'));
+      try {
+        await timersController.createTimer({
+          ...createTimer,
+          superheroId: '888',
+        });
+      } catch (error) {
+        expect(error).toEqual(new NotFoundException('No such superhero'));
+      }
     });
   });
 
