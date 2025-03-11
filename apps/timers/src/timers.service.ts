@@ -74,7 +74,7 @@ export class TimersService {
         savedTimer,
       );
       return {
-        _id: savedTimer._id,
+        timerId: savedTimer._id,
         totalSecondsTillExecution: getTotalSecondsTillExecution(
           savedTimer.executedAt,
         ),
@@ -90,11 +90,11 @@ export class TimersService {
       const timer = await this.timerModel.findById(id);
       if (!timer) {
         this.logger.error(`Timer with id ${id} not found in DB`);
-        return { _id: id, totalSecondsTillExecution: 0 };
+        return { timerId: id, totalSecondsTillExecution: 0 };
       }
       this.logger.log(`Found timer with id ${id}`, timer);
       return {
-        _id: timer._id,
+        timerId: timer._id,
         totalSecondsTillExecution: getTotalSecondsTillExecution(
           timer.executedAt,
         ),

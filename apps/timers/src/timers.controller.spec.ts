@@ -44,7 +44,7 @@ describe(TimersController.name, () => {
           ),
         });
         return {
-          _id: timers[0]._id,
+          timerId: timers[0]._id,
           totalSecondsTillExecution: getTotalSecondsTillExecution(
             timers[0].executedAt,
           ),
@@ -52,9 +52,9 @@ describe(TimersController.name, () => {
       },
       getById: (id: string): ResponseTimer => {
         const timer = timers.find((timer) => timer._id === id);
-        if (!timer) return { _id: id, totalSecondsTillExecution: 0 };
+        if (!timer) return { timerId: id, totalSecondsTillExecution: 0 };
         return {
-          _id: timer?._id ?? id,
+          timerId: timer?._id ?? id,
           totalSecondsTillExecution: getTotalSecondsTillExecution(
             timer?.executedAt ?? Date.now(),
           ),

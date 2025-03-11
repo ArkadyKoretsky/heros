@@ -4,7 +4,7 @@ export class ResponseTimer {
   /**
    * Timer ID in DB
    */
-  _id: Types.ObjectId | string;
+  timerId: Types.ObjectId | string;
 
   /**
    * Calculated from current time and "executedAt"

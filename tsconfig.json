@@ -18,18 +18,10 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@shield/common": [
-        "libs/common/src"
-      ],
-      "@shield/common/*": [
-        "libs/common/src/*"
-      ],
-      "@shield/config": [
-        "libs/config/src"
-      ],
-      "@shield/config/*": [
-        "libs/config/src/*"
-      ]
+      "@shield/common": ["libs/common/src"],
+      "@shield/common/*": ["libs/common/src/*"],
+      "@shield/config": ["libs/config/src"],
+      "@shield/config/*": ["libs/config/src/*"]
     }
   }
 }

@@ -5,7 +5,12 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "plugins": [
-      { "name": "@nestjs/swagger", "options": { "introspectComments": true } }
+      {
+        "name": "@nestjs/swagger",
+        "options": {
+          "introspectComments": true
+        }
+      }
     ],
     "webpack": true,
     "tsConfigPath": "apps/superheroes/tsconfig.app.json"
@@ -38,7 +43,10 @@
       "sourceRoot": "apps/schedulers/src",
       "compilerOptions": {
         "assets": [
-          { "include": "../config/*.yaml", "outDir": "./dist/apps/schedulers" }
+          {
+            "include": "../config/*.yaml",
+            "outDir": "./dist/apps/schedulers"
+          }
         ],
         "tsConfigPath": "apps/schedulers/tsconfig.app.json"
       }
@@ -50,7 +58,10 @@
       "sourceRoot": "apps/superheroes/src",
       "compilerOptions": {
         "assets": [
-          { "include": "../config/*.yaml", "outDir": "./dist/apps/superheroes" }
+          {
+            "include": "../config/*.yaml",
+            "outDir": "./dist/apps/superheroes"
+          }
         ],
         "tsConfigPath": "apps/superheroes/tsconfig.app.json"
       }
@@ -62,7 +73,10 @@
       "sourceRoot": "apps/timers/src",
       "compilerOptions": {
         "assets": [
-          { "include": "../config/*.yaml", "outDir": "./dist/apps/timers" }
+          {
+            "include": "../config/*.yaml",
+            "outDir": "./dist/apps/timers"
+          }
         ],
         "tsConfigPath": "apps/timers/tsconfig.app.json"
       }
