@@ -25,8 +25,7 @@ import { HealthModule } from './health/health.module';
     HttpModule.registerAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        baseURL: configService.get('superheroes.baseUrl'),
-        timeout: configService.get('superheroes.timeout'),
+        timeout: configService.get('timeout'),
       }),
       inject: [ConfigService],
     }),

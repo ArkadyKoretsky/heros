@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(TimersModule);
+  const app = await NestFactory.create(TimersModule, { cors: true });
   setupSwagger(app);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   const configService = app.get(ConfigService);

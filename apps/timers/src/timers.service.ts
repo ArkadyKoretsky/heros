@@ -7,13 +7,13 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateTimer, ResponseTimer, Timer } from './entities';
+import { CreateTimer, ResponseTimer, TaskTimer, Timer } from './entities';
 import { Model } from 'mongoose';
 import { catchError, firstValueFrom, map, retry } from 'rxjs';
 import { AxiosError } from 'axios';
 import {
   convertTimestampsToDate,
-  getTotalSecondsTillExecution,
+  getTotalTimeTillExecution,
   SuperheroData,
 } from './utils';
 
@@ -21,7 +21,7 @@ import {
 export class TimersService {
   private readonly logger: Logger;
 
-  private readonly superheroesEndpoint: string;
+  private readonly endpoints: { superheroes: string; schedulers: string };
 
   private readonly retryAttempts: number;
 
@@ -31,8 +31,10 @@ export class TimersService {
     private readonly configService: ConfigService,
   ) {
     this.logger = new Logger(TimersService.name);
-    this.superheroesEndpoint =
-      this.configService.get('superheroes.endpoint') ?? 'superheroes';
+    this.endpoints = {
+      superheroes: `${this.configService.get('superheroes.baseUrl') ?? 'http://localhost:3000'}/${this.configService.get('superheroes.endpoint') ?? 'superheroes'}`,
+      schedulers: `${this.configService.get('schedulers.baseUrl') ?? 'http://localhost:3002'}/${this.configService.get('schedulers.endpoint') ?? 'schedulers'}`,
+    };
     this.retryAttempts = this.configService.get('timers.retryAttempts') ?? 2;
   }
 
@@ -41,7 +43,7 @@ export class TimersService {
       const superhero = await firstValueFrom(
         this.httpService
           .get<SuperheroData>(
-            `${this.superheroesEndpoint}/${createTimer.superheroId}`,
+            `${this.endpoints.superheroes}/${createTimer.superheroId}`,
           )
           .pipe(
             retry(this.retryAttempts),
@@ -73,10 +75,31 @@ export class TimersService {
         `Created timer for superhero ${superhero.fullName}`,
         savedTimer,
       );
+      this.httpService
+        .post<TaskTimer, TaskTimer>(this.endpoints.schedulers, {
+          timerId: savedTimer._id,
+          message: savedTimer.message,
+          superheroName: savedTimer.superheroName,
+          url: savedTimer.url,
+          msTillExecution: getTotalTimeTillExecution(savedTimer.executedAt, 1),
+        })
+        .subscribe({
+          next: (response) =>
+            this.logger.log(
+              `Successfully added task to queue of timer ${savedTimer._id.toString()}`,
+              response.data,
+            ),
+          error: (error) =>
+            this.logger.error(
+              `Failed to add task to queue of timer ${savedTimer._id.toString()}`,
+              error,
+            ),
+        });
       return {
         timerId: savedTimer._id,
-        totalSecondsTillExecution: getTotalSecondsTillExecution(
+        totalSecondsTillExecution: getTotalTimeTillExecution(
           savedTimer.executedAt,
+          10 ** -3, // convert milliseconds to seconds
         ),
       };
     } catch (error) {
@@ -95,8 +118,9 @@ export class TimersService {
       this.logger.log(`Found timer with id ${id}`, timer);
       return {
         timerId: timer._id,
-        totalSecondsTillExecution: getTotalSecondsTillExecution(
+        totalSecondsTillExecution: getTotalTimeTillExecution(
           timer.executedAt,
+          10 ** -3,
         ),
       };
     } catch (error) {

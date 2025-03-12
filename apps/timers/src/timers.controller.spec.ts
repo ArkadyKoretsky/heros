@@ -4,7 +4,7 @@ import { TimersService } from './timers.service';
 import { ServiceInfoModule } from '@shield/common';
 import {
   convertTimestampsToDate,
-  getTotalSecondsTillExecution,
+  getTotalTimeTillExecution,
   SuperheroData,
   timersServiceInfo,
 } from './utils';
@@ -45,7 +45,7 @@ describe(TimersController.name, () => {
         });
         return {
           timerId: timers[0]._id,
-          totalSecondsTillExecution: getTotalSecondsTillExecution(
+          totalSecondsTillExecution: getTotalTimeTillExecution(
             timers[0].executedAt,
           ),
         };
@@ -55,7 +55,7 @@ describe(TimersController.name, () => {
         if (!timer) return { timerId: id, totalSecondsTillExecution: 0 };
         return {
           timerId: timer?._id ?? id,
-          totalSecondsTillExecution: getTotalSecondsTillExecution(
+          totalSecondsTillExecution: getTotalTimeTillExecution(
             timer?.executedAt ?? Date.now(),
           ),
         };

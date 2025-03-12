@@ -7,13 +7,16 @@ import { YamlConfigModule } from '@shield/config';
 import { BullModule } from '@nestjs/bullmq';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { HealthModule } from './health/health.module';
+import { HttpModule } from '@nestjs/axios';
+import { SchedulersProcessor } from './schedulers.processor';
 
 @Module({
   imports: [
     ServiceInfoModule.register(schedulersServiceInfo),
     YamlConfigModule,
+    HttpModule,
     BullModule.registerQueueAsync({
-      name: 'timers',
+      name: 'timer',
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         connection: configService.get<RedisConnectionOptions>('redis') ?? {},
@@ -23,6 +26,6 @@ import { HealthModule } from './health/health.module';
     HealthModule,
   ],
   controllers: [SchedulersController],
-  providers: [SchedulersService],
+  providers: [SchedulersService, SchedulersProcessor],
 })
 export class SchedulersModule {}

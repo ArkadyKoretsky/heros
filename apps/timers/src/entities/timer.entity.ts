@@ -1,9 +1,22 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { isMongoId, IsMongoId, isURL, IsUrl, MinLength } from 'class-validator';
+import {
+  isMongoId,
+  IsMongoId,
+  isURL,
+  IsUrl,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 @Schema({ timestamps: true, validateBeforeSave: true })
 export class Timer {
+  /**
+   * The super hero who requested this job.
+   * @example "Tony Stark"
+   */
   @Prop({ required: true, type: String, minlength: 5, maxlength: 20 })
+  @MinLength(5)
+  @MaxLength(20)
   superheroName: string;
 
   /**

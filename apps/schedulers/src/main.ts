@@ -5,7 +5,7 @@ import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(SchedulersModule);
+  const app = await NestFactory.create(SchedulersModule, { cors: true });
   setupSwagger(app);
   const configService = app.get(ConfigService);
   const logger = new Logger('bootstrap');
