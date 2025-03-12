@@ -13,7 +13,7 @@ import { NotFoundException } from '@nestjs/common';
 
 describe(TimersController.name, () => {
   const superheroes: SuperheroData[] = [{ _id: '1234', fullName: 'Test' }];
-  const timers: (Timer & { _id: string })[] = [];
+  const timers: (Timer & { timerId: string })[] = [];
   const createTimer: CreateTimer = {
     hours: 0,
     minutes: 3,
@@ -32,7 +32,7 @@ describe(TimersController.name, () => {
         );
         if (!superhero) throw new NotFoundException('No such superhero');
         timers.push({
-          _id: '5678',
+          timerId: '5678',
           superheroId: superhero._id,
           superheroName: superhero.fullName,
           message: createTimer.message,
@@ -44,19 +44,21 @@ describe(TimersController.name, () => {
           ),
         });
         return {
-          timerId: timers[0]._id,
+          timerId: timers[0].timerId,
           totalSecondsTillExecution: getTotalTimeTillExecution(
             timers[0].executedAt,
+            10 ** -3, // convert milliseconds to seconds
           ),
         };
       },
       getById: (id: string): ResponseTimer => {
-        const timer = timers.find((timer) => timer._id === id);
+        const timer = timers.find((timer) => timer.timerId === id);
         if (!timer) return { timerId: id, totalSecondsTillExecution: 0 };
         return {
-          timerId: timer?._id ?? id,
+          timerId: timer?.timerId ?? id,
           totalSecondsTillExecution: getTotalTimeTillExecution(
             timer?.executedAt ?? Date.now(),
+            10 ** -3, // convert milliseconds to seconds
           ),
         };
       },
@@ -80,7 +82,7 @@ describe(TimersController.name, () => {
     it('should create new timer and return its id and total seconds till execution', async () => {
       const result = await timersController.createTimer(createTimer);
       expect(result).toEqual({
-        _id: '5678',
+        timerId: '5678',
         totalSecondsTillExecution: 180, // 3 minutes
       });
       expect(timers).toHaveLength(1);
@@ -104,7 +106,7 @@ describe(TimersController.name, () => {
     it('should return timer by id and total seconds till execution', async () => {
       const result = await timersController.getTimerById('5678');
       expect(result).toEqual({
-        _id: '5678',
+        timerId: '5678',
         totalSecondsTillExecution: 180, // 3 minutes
       });
     });
@@ -113,7 +115,7 @@ describe(TimersController.name, () => {
   describe('get timer by id when timer not found', () => {
     it('should throw not found exception', async () => {
       expect(await timersController.getTimerById('9999')).toEqual({
-        _id: '9999',
+        timerId: '9999',
         totalSecondsTillExecution: 0,
       });
     });
