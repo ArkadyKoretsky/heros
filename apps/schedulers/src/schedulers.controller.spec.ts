@@ -36,10 +36,17 @@ describe(SchedulersController.name, () => {
   });
 
   describe('add task to queue', () => {
-    it('should add task to ', () => {
-      expect(schedulersController.getSchedulersServiceInfo()).toBe(
-        schedulersServiceInfo,
-      );
+    it('should add task to jobs queue', async () => {
+      const task: SuperheroTask = {
+        message: 'Test',
+        superheroName: 'Test',
+        timerId: '1234',
+        url: 'http://example.com',
+        msTillExecution: 10000,
+      };
+      await schedulersController.addSuperheroTask(task);
+      expect(tasksQueue).toEqual([task]);
+      expect(tasksQueue).toHaveLength(1);
     });
   });
 });
