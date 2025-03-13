@@ -21,6 +21,7 @@ describe(SuperheroesController.name, () => {
         superheroes.push({ ...superhero, _id: '1234' });
         return superhero;
       },
+      getAll: (): Superhero[] => superheroes,
       getById: (id: string): Superhero => {
         const superhero = superheroes.find((superhero) => superhero._id === id);
         if (!superhero) throw new NotFoundException('Superhero not found');
@@ -51,6 +52,14 @@ describe(SuperheroesController.name, () => {
   describe('create superhero', () => {
     it('should add new superhero to superheroes array', async () => {
       await superheroesController.createSuperhero(testSuperhero);
+      expect(superheroes).toEqual([{ _id: '1234', ...testSuperhero }]);
+      expect(superheroes).toHaveLength(1);
+    });
+  });
+
+  describe('get all superheroes', () => {
+    it('should return all superheroes', async () => {
+      const superheroes = await superheroesController.getAllSuperheroes();
       expect(superheroes).toEqual([{ _id: '1234', ...testSuperhero }]);
       expect(superheroes).toHaveLength(1);
     });
