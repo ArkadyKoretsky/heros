@@ -38,6 +38,13 @@ export class SuperheroesController {
     return this.superheroesService.create(superhero);
   }
 
+  @ApiOperation({ summary: 'Get all superheroes from DB' })
+  @ApiOkResponse({ description: 'Returns all superheroes', type: [Superhero] })
+  @Get('superheroes')
+  getAllSuperheroes(): Promise<Superhero[]> {
+    return this.superheroesService.getAll();
+  }
+
   @ApiOperation({ summary: 'Get superhero by id' })
   @ApiOkResponse({ description: 'Returns superhero by id', type: Superhero })
   @ApiNotFoundResponse({ description: 'No hero in DB with the given ID' })

@@ -25,6 +25,10 @@ export class SuperheroesService {
     return createdSuperhero.save();
   }
 
+  async getAll(): Promise<Superhero[]> {
+    return this.superHeroModel.find().select(projection);
+  }
+
   async getById(id: string): Promise<Superhero> {
     try {
       const superhero = await this.superHeroModel
